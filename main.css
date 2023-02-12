@@ -1,0 +1,23 @@
+main {
+  width: 1800px;
+  height: 900px;
+  background-color: rgb(255, 255, 255);
+  margin: 20px auto;
+  border: 10px inset rgb(100, 100, 100);
+}
+
+main .typing {
+  width: 800px;
+  height: 100px;
+  background-color: rgb(219, 219, 219);
+  margin: 0 auto;
+  line-height: 100px;
+  text-align: center;
+}
+main input {
+  width: 1300px;
+  height: 100px;
+  margin: 0 auto;
+  display: block;
+  text-align: center;
+}
