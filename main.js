@@ -1,10 +1,13 @@
+// 타이핑 영역
 const typing_view = document.querySelector(".typing");
 const typing_area = document.querySelector(".area");
-
 const timeEl = document.querySelector(".time");
 const scoreEl = document.querySelector(".score");
 const startEl = document.querySelector(".start");
-
+// level 선택
+const levelEl = document.querySelector(".level");
+const levelShow = document.querySelector(".level-show");
+const choiceEl = document.querySelectorAll(".choice");
 const text_Content = [
   "삶이 있는 한 희망은 있다.",
   "산다는 것 그것은 치열한 전투이다.",
@@ -32,9 +35,15 @@ const text_Content = [
   "자신감 있는 표정을 지으면 자신감이 생긴다.",
 ];
 
-let time = 15;
-let score = 0;
-let interval;
+levelEl.addEventListener("click", () => {
+  levelEl.classList.toggle("spread");
+});
+
+choiceEl.forEach((el) => {
+  el.addEventListener("click", () => {
+    levelShow.textContent = el.textContent;
+  });
+});
 
 startEl.addEventListener("click", () => {
   gameStart();
@@ -42,13 +51,14 @@ startEl.addEventListener("click", () => {
   startTimer();
 });
 
+let score = 0;
 typing_area.addEventListener("keyup", () => {
   if (typing_view.textContent.length <= event.target.value.length) {
     if (event.code === "Enter" || event.code == "Space") {
       if (typing_area.value == typing_view.textContent) {
         score += 1;
         scoreEl.textContent = `${score} 점`;
-        time += 10;
+        plusTime();
         gameStart();
       }
     }
@@ -61,6 +71,7 @@ function gameStart() {
   typing_area.setAttribute("maxlength", typing_view.textContent.length);
   typing_area.value = "";
   typing_area.focus();
+  defaultTime();
 }
 
 function gameReset() {
@@ -69,10 +80,11 @@ function gameReset() {
   scoreEl.textContent = "SCORE";
   score = 0;
 }
-
+let interval;
 function startTimer() {
   interval = setInterval(timer, 100);
 }
+let time;
 
 function timer() {
   time -= 0.1;
@@ -82,6 +94,33 @@ function timer() {
     timeEl.textContent = "TIME OUT!";
     startEl.classList.remove("ing");
     gameReset();
-    time = 15;
+  }
+}
+
+function plusTime() {
+  switch (levelShow.textContent) {
+    case "EASY":
+      time += 13;
+      break;
+    case "NOMAL":
+      time += 10;
+      break;
+    case "HARD":
+      time += 7;
+      break;
+  }
+}
+
+function defaultTime() {
+  switch (levelShow.textContent) {
+    case "EASY":
+      time = 20;
+      break;
+    case "NOMAL":
+      time = 16;
+      break;
+    case "HARD":
+      time = 12;
+      break;
   }
 }
