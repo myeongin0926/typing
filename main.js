@@ -1,6 +1,10 @@
 const typing_view = document.querySelector(".typing");
 const typing_area = document.querySelector(".area");
 
+const timeEl = document.querySelector(".time");
+const scoreEl = document.querySelector(".score");
+const startEl = document.querySelector(".start");
+
 const text_Content = [
   "삶이 있는 한 희망은 있다.",
   "산다는 것 그것은 치열한 전투이다.",
@@ -28,18 +32,56 @@ const text_Content = [
   "자신감 있는 표정을 지으면 자신감이 생긴다.",
 ];
 
-typing_view.addEventListener("click", () => {
-  randomNumber = Math.floor(Math.random(1) * text_Content.length);
-  console.log(randomNumber);
-  typing_view.textContent = text_Content[randomNumber];
+let time = 15;
+let score = 0;
+let interval;
+
+startEl.addEventListener("click", () => {
+  gameStart();
+  startEl.classList.add("ing");
+  startTimer();
 });
 
 typing_area.addEventListener("keyup", () => {
   if (typing_view.textContent.length <= event.target.value.length) {
-    if (typing_view.textContent == event.target.value) {
-      console.log(100);
-    } else {
-      console.log(0);
+    if (event.code === "Enter" || event.code == "Space") {
+      if (typing_area.value == typing_view.textContent) {
+        score += 1;
+        scoreEl.textContent = `${score} 점`;
+        time += 10;
+        gameStart();
+      }
     }
   }
 });
+
+function gameStart() {
+  randomNumber = Math.floor(Math.random(1) * text_Content.length);
+  typing_view.textContent = text_Content[randomNumber];
+  typing_area.setAttribute("maxlength", typing_view.textContent.length);
+  typing_area.value = "";
+  typing_area.focus();
+}
+
+function gameReset() {
+  typing_view.textContent = "";
+  typing_area.value = "";
+  scoreEl.textContent = "SCORE";
+  score = 0;
+}
+
+function startTimer() {
+  interval = setInterval(timer, 100);
+}
+
+function timer() {
+  time -= 0.1;
+  timeEl.textContent = time.toFixed(1);
+  if (time <= 0) {
+    clearInterval(interval);
+    timeEl.textContent = "TIME OUT!";
+    startEl.classList.remove("ing");
+    gameReset();
+    time = 15;
+  }
+}
