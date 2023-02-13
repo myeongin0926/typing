@@ -4,6 +4,7 @@ const typing_area = document.querySelector(".area");
 const timeEl = document.querySelector(".time");
 const scoreEl = document.querySelector(".score");
 const startEl = document.querySelector(".start");
+const btnsEl = document.querySelector(".btns");
 // level 선택
 const levelEl = document.querySelector(".level");
 const levelShow = document.querySelector(".level-show");
@@ -22,7 +23,6 @@ const text_Content = [
   "계단을 밟아야 계단 위에 올라설 수 있다.",
   "평생 살 것처럼 꿈을 꾸어라. 그리고 내일 죽을 것처럼 오늘을 살아라.",
   "만약 우리가 할 수 있는 일을 모두 한다면 우리는 우리 자신에 깜짝 놀랄 것이다.",
-  "당신이 할수 있다고 믿든 할수 없다고 믿든 믿는 대로 될 것이다.",
   "세상은 고통으로 가득하지만, 그것을 극복하는 사람들로도 가득하다.",
   "겨울이 오면 봄이 멀지 않으리.",
   "문제점을 찾지 말고 해결책을 찾으라.",
@@ -47,7 +47,7 @@ choiceEl.forEach((el) => {
 
 startEl.addEventListener("click", () => {
   gameStart();
-  startEl.classList.add("ing");
+  btnsEl.classList.add("ing");
   startTimer();
 });
 
@@ -92,7 +92,7 @@ function timer() {
   if (time <= 0) {
     clearInterval(interval);
     timeEl.textContent = "TIME OUT!";
-    startEl.classList.remove("ing");
+    btnsEl.classList.remove("ing");
     gameReset();
   }
 }

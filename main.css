@@ -1,41 +1,118 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  background-image: url("./cloud.PNG");
-  background-size: 100%;
+  background-image: url("./mitchell-luo-xREzOtWzDrQ-unsplash.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100vh;
 }
+
+@media (max-width: 650px) {
+  body {
+    height: 97.8vh;
+  }
+}
+/* header */
+header {
+  width: 90%;
+  height: 100px;
+  margin: 20px auto 0;
+  display: flex;
+  align-items: flex-end;
+}
+header > ul {
+  display: flex;
+  width: 400px;
+  justify-content: space-between;
+  margin: 0 auto;
+  position: relative;
+}
+header > ul > li {
+  width: 120px;
+  height: 50px;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+  color: rgb(0, 0, 0, 0.5);
+  line-height: 50px;
+  overflow: hidden;
+  transition: 0.3s;
+  text-align: center;
+  cursor: pointer;
+}
+header > ul > li:hover {
+  border: 1px solid rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+}
+header .level {
+  position: absolute;
+  display: block;
+  left: 140px;
+}
+
+header .level.spread {
+  height: 200px;
+}
+
+header .level-choice li:hover {
+  background-color: rgb(255, 255, 255, 0.5);
+}
+@media (max-width: 650px) {
+  header > ul {
+    width: 350px;
+  }
+  header .level {
+    position: absolute;
+    display: block;
+    left: 125px;
+  }
+  header > ul > li {
+    width: 100px;
+    height: 40px;
+    line-height: 40px;
+    transition: none;
+    border: 1px solid rgb(0, 0, 0);
+    color: rgb(0, 0, 0);
+  }
+  header .level.spread {
+    height: 160px;
+  }
+}
+
+/* main */
 
 main {
   position: relative;
   margin: 0 auto;
 }
 main .typing {
-  width: 90%;
-  height: 250px;
-  background-color: rgba(0, 0, 0, 0.7);
-  margin: 150px auto 200px;
+  width: 800px;
+  height: 160px;
+  margin: 180px auto 100px;
   line-height: 250px;
   text-align: center;
-  font-size: 25px;
+  font-size: 18px;
+  font-weight: 900;
   font-style: italic;
-  color: white;
-  border: 10px groove;
+  border-bottom: 1px solid;
 }
 main .area {
-  width: 80%;
+  width: 800px;
   height: 80px;
-  margin: 80px auto 0;
+  margin: 0 auto;
   display: block;
   text-align: center;
-  font-size: 25px;
+  font-size: 18px;
   outline: none;
-  background-color: rgba(255, 255, 255, 0.356);
+  font-weight: 900;
+  font-style: italic;
+  background-color: rgba(0, 0, 0, 0.05);
   border: none;
+  border-top: 1px solid;
 }
 
 main .btns {
@@ -43,61 +120,79 @@ main .btns {
   width: 700px;
   gap: 25px;
   justify-content: center;
-  margin: -220px auto;
+  margin: -150px auto;
 }
 
 main .score,
 main .time,
 main .start {
-  width: 200px;
-  height: 70px;
+  width: 150px;
+  height: 40px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: rgba(0, 0, 0, 0.103);
+  background-color: rgba(0, 0, 0, 0.1);
   color: white;
   border: 3px solid white;
-  font-size: 25px;
+  font-size: 20px;
   font-weight: 500;
   border-radius: 20px;
   transition: 0.3s;
 }
-main .start:hover {
-  background-color: rgba(255, 255, 255, 0.103);
+
+main .btns .start:hover {
+  background-color: rgb(0, 0, 0, 0.5);
   color: white;
   border: 3px solid white;
   cursor: pointer;
 }
-
-main .start.ing {
+main .btns.ing .score {
+  transform: translate(-70px, 0);
+}
+main .btns.ing .time {
+  transform: translate(70px, 0);
+}
+main .btns.ing .start {
   opacity: 0;
   visibility: hidden;
 }
-
-main h3 {
-  position: absolute;
-  top: 310px;
-  left: 500px;
-  font-size: 20px;
-}
-
-main .level {
-  width: 100px;
-  height: 40px;
-  position: absolute;
-  left: 475px;
-  top: 340px;
-  border: 1px solid;
-  line-height: 40px;
-  overflow: hidden;
-  transition: 0.3s;
-  text-align: center;
-  cursor: pointer;
-}
-main .level.spread {
-  height: 160px;
-}
-
-main .level-choice li:hover {
-  background-color: lightgray;
+@media (max-width: 650px) {
+  main .typing {
+    width: 500px;
+    height: 50px;
+    color: white;
+    line-height: 50px;
+    font-size: 12px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  main .area {
+    width: 500px;
+    height: 50px;
+    font-size: 13px;
+    color: white;
+    line-height: 50px;
+    font-size: 12px;
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  main .btns {
+    width: 400px;
+    height: 100px;
+    align-items: center;
+  }
+  main .score,
+  main .time,
+  main .start {
+    width: 100px;
+    height: 30px;
+    font-size: 14px;
+  }
+  main .btns .start:hover {
+    background-color: rgb(0, 0, 0, 0.1);
+  }
+  main .btns.ing .score {
+    transform: translate(-40px, 0);
+  }
+  main .btns.ing .time {
+    transform: translate(40px, 0);
+  }
 }
