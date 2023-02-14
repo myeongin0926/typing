@@ -8,15 +8,12 @@ body {
   -ms-user-select: none;
   user-select: none;
   background-image: url("./mitchell-luo-xREzOtWzDrQ-unsplash.jpg");
+  background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
 }
 
 @media (max-width: 650px) {
-  body {
-    height: 97.8vh;
-  }
 }
 /* header */
 header {
@@ -28,7 +25,7 @@ header {
 }
 header > ul {
   display: flex;
-  width: 400px;
+  width: 600px;
   justify-content: space-between;
   margin: 0 auto;
   position: relative;
@@ -39,47 +36,47 @@ header > ul > li {
   border: 1px solid rgba(0, 0, 0, 0.5);
   color: rgb(0, 0, 0, 0.5);
   line-height: 50px;
-  overflow: hidden;
   transition: 0.3s;
   text-align: center;
   cursor: pointer;
 }
+
+header .level .level-choice {
+  opacity: 0;
+  border-bottom: 0px solid;
+  visibility: hidden;
+}
+
+header .level.spread .level-choice {
+  opacity: 1;
+  visibility: visible;
+}
+
 header > ul > li:hover {
   border: 1px solid rgb(0, 0, 0);
   color: rgb(0, 0, 0);
 }
-header .level {
-  position: absolute;
-  display: block;
-  left: 140px;
-}
 
 header .level.spread {
-  height: 200px;
+  border-bottom: none;
 }
 
-header .level-choice li:hover {
-  background-color: rgb(255, 255, 255, 0.5);
-}
 @media (max-width: 650px) {
   header > ul {
-    width: 350px;
-  }
-  header .level {
-    position: absolute;
-    display: block;
-    left: 125px;
+    width: 80%;
   }
   header > ul > li {
-    width: 100px;
+    width: 30%;
+    font-size: 11px;
     height: 40px;
     line-height: 40px;
     transition: none;
-    border: 1px solid rgb(0, 0, 0);
-    color: rgb(0, 0, 0);
+    border: 1px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
   }
-  header .level.spread {
-    height: 160px;
+  header > ul > li:hover {
+    border: 1px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
   }
 }
 
@@ -158,15 +155,15 @@ main .btns.ing .start {
 }
 @media (max-width: 650px) {
   main .typing {
-    width: 500px;
+    width: 70%;
     height: 50px;
     color: white;
     line-height: 50px;
-    font-size: 12px;
+    font-size: 10px;
     background-color: rgba(0, 0, 0, 0.5);
   }
   main .area {
-    width: 500px;
+    width: 70%;
     height: 50px;
     font-size: 13px;
     color: white;
@@ -175,16 +172,16 @@ main .btns.ing .start {
     background-color: rgba(0, 0, 0, 0.5);
   }
   main .btns {
-    width: 400px;
+    width: 70%;
     height: 100px;
     align-items: center;
   }
   main .score,
   main .time,
   main .start {
-    width: 100px;
+    width: 25%;
     height: 30px;
-    font-size: 14px;
+    font-size: 10px;
   }
   main .btns .start:hover {
     background-color: rgb(0, 0, 0, 0.1);
