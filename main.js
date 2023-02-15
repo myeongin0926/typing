@@ -160,7 +160,18 @@ let time;
 function timer() {
   time -= 0.01;
   timeEl.textContent = time.toFixed(1);
-  timeLine.style.width = 50 * time + "px";
+  switch (levelShow.textContent) {
+    case "EASY":
+      timeLine.style.width = (800 / 15) * time + "px";
+      break;
+    case "NOMAL":
+      timeLine.style.width = (800 / 10) * time + "px";
+      10;
+      break;
+    case "HARD":
+      timeLine.style.width = (800 / 7) * time + "px";
+      break;
+  }
   if (time <= 0) {
     clearInterval(interval);
     timeEl.textContent = "TIME OUT!";
@@ -169,17 +180,48 @@ function timer() {
     gameReset();
   }
 }
+// mobile timeline
+if (matchMedia("(max-width: 650px)").matches) {
+  function timer() {
+    time -= 0.01;
+    timeEl.textContent = time.toFixed(1);
+    switch (levelShow.textContent) {
+      case "EASY":
+        timeLine.style.width = (100 / 15) * time + "%";
+        break;
+      case "NOMAL":
+        timeLine.style.width = (100 / 10) * time + "%";
+        break;
+      case "HARD":
+        timeLine.style.width = (100 / 7) * time + "%";
+        break;
+    }
+    if (time <= 0) {
+      clearInterval(interval);
+      timeEl.textContent = "TIME OUT!";
+      btnsEl.classList.remove("ing");
+      headerEl.classList.remove("ing");
+      gameReset();
+    }
+  }
+}
 
 function plusTime() {
   switch (levelShow.textContent) {
     case "EASY":
-      time += 10;
+      time = 15;
       break;
     case "NOMAL":
-      time += 7;
+      time += 6;
+      if (time > 10) {
+        time = 10;
+      }
       break;
     case "HARD":
-      time += 5;
+      time += 4;
+      if (time > 7) {
+        time = 10;
+      }
       break;
   }
 }
@@ -187,13 +229,13 @@ function plusTime() {
 function defaultTime() {
   switch (levelShow.textContent) {
     case "EASY":
-      time = 20;
+      time = 15;
       break;
     case "NOMAL":
-      time = 16;
+      time = 10;
       break;
     case "HARD":
-      time = 12;
+      time = 7;
       break;
   }
 }

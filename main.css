@@ -179,8 +179,14 @@ main .btns.ing .start {
   visibility: hidden;
 }
 @media (max-width: 650px) {
-  main .typing-show {
+  main .typing-show-area {
     width: 70%;
+  }
+  main .typing-show-area .line {
+    max-width: 100%;
+  }
+  main .typing-show {
+    width: 100%;
     height: 50px;
     color: white;
     line-height: 50px;
