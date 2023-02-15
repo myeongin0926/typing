@@ -22,7 +22,14 @@ header {
   margin: 20px auto 0;
   display: flex;
   align-items: flex-end;
+  transition: 0.3s;
 }
+
+header.ing {
+  pointer-events: none;
+  opacity: 0.3;
+}
+
 header > ul {
   display: flex;
   width: 600px;
@@ -30,35 +37,38 @@ header > ul {
   margin: 0 auto;
   position: relative;
 }
+
 header > ul > li {
   width: 120px;
   height: 50px;
-  border: 1px solid rgba(0, 0, 0, 0.5);
-  color: rgb(0, 0, 0, 0.5);
+  border: 1px solid rgba(0, 0, 0);
+  color: rgb(0, 0, 0);
   line-height: 50px;
   transition: 0.3s;
   text-align: center;
   cursor: pointer;
 }
 
-header .level .level-choice {
-  opacity: 0;
-  border-bottom: 0px solid;
-  visibility: hidden;
+header ul .langko.language,
+header ul .langen.language {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
-header .level.spread .level-choice {
+header .level .level-choice .choice {
+  opacity: 0;
+  visibility: hidden;
+
+  transition-delay: 0s;
+}
+
+header .level.spread .level-choice .choice {
   opacity: 1;
   visibility: visible;
-}
-
-header > ul > li:hover {
-  border: 1px solid rgb(0, 0, 0);
-  color: rgb(0, 0, 0);
+  transition: 0.3s;
 }
 
 header .level.spread {
-  border-bottom: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0);
 }
 
 @media (max-width: 650px) {

@@ -8,14 +8,46 @@ const btnsEl = document.querySelector(".btns");
 // level 선택
 const levelEl = document.querySelector(".level");
 const levelShow = document.querySelector(".level-show");
-const choiceEl = document.querySelectorAll(".choice");
-const text_Content = [
+const choiceEl = [...document.querySelectorAll(".choice")];
+// language 선택
+const langEn = document.querySelector(".langen");
+const LangKo = document.querySelector(".langko");
+// header 선택
+const headerEl = document.querySelector("header");
+langEn.addEventListener("click", () => {
+  sessionStorage.setItem("language", JSON.stringify("english"));
+});
+LangKo.addEventListener("click", () => {
+  sessionStorage.removeItem("language");
+});
+
+const en_Content = [
+  "Hello World!",
+  "Don't dwell on the past",
+  "Believe in yourself",
+  "Follow your heart",
+  "Seize the day",
+  "You only live once",
+  "Past is just past",
+  "Love yourself",
+  "No pain, No gain",
+  "Be brave",
+  "Hang in there",
+  "Live positive",
+  "if not now, then when?",
+  "Time is gold",
+  "Love what you do",
+  "Life is unfair, get used to it",
+  "Time waits for no one",
+  "Don't waste your youth",
+];
+const ko_Content = [
   "숭례문은 국보 1호 문화재이다.",
   "우리나라 최초의 한글 소설은 홍길동전이다.",
   "학교폭력 상담 전화는 117이다.",
   "이탈리아의 수도는 로마이다.",
   "돼지는 하늘을 볼 수 없다.",
-  "계란을 서로 부딪치면 하나만 깨진다.",
+  "달걀을 서로 부딪치면 하나만 깨진다.",
   "땅콩은 견과류가 아니다.",
   "의사, 변호사, 검사의 '사'자는 다 다르다.",
   "쥐는 치즈를 선호하지 않는다.",
@@ -33,9 +65,21 @@ const text_Content = [
   "태양 안에는 96만 개의 지구가 들어갈 수 있다.",
   "한국어는 전 세계에서 12번째로 많이 쓰인다.",
 ];
+// header
+
+headerEl.addEventListener("click", () => {
+  if (JSON.parse(sessionStorage.getItem("language")) === "english") {
+    langEn.classList.add("language");
+    LangKo.classList.remove("language");
+  } else {
+    LangKo.classList.add("language");
+    langEn.classList.remove("language");
+  }
+});
 
 levelEl.addEventListener("click", () => {
   levelEl.classList.toggle("spread");
+  choiceDelay();
 });
 
 choiceEl.forEach((el) => {
@@ -44,17 +88,39 @@ choiceEl.forEach((el) => {
   });
 });
 
+function choiceDelay() {
+  choiceEl.forEach((el, index) => {
+    el.style.transitionDelay = (index * 0.15) / choiceEl.length + "s";
+  });
+  choiceEl.reverse();
+}
+
+console.log(choiceEl);
+//main
 startEl.addEventListener("click", () => {
   gameStart();
   btnsEl.classList.add("ing");
+  headerEl.classList.add("ing");
   startTimer();
 });
+
+function gameStart() {
+  if (JSON.parse(sessionStorage.getItem("language")) === "english") {
+    enSet();
+    defaultTime();
+    scoreReset();
+  } else {
+    koSet();
+    defaultTime();
+    scoreReset();
+  }
+}
 
 let score = 0;
 typing_area.addEventListener("keyup", () => {
   if (typing_view.textContent.length <= event.target.value.length) {
     if (event.code === "Enter" || event.code == "Space") {
-      if (typing_area.value == typing_view.textContent) {
+      if (typing_area.value == typing_view.textContent && typing_area.value.length > 0) {
         score += 1;
         scoreEl.textContent = `${score} 점`;
         gameReStart();
@@ -63,35 +129,28 @@ typing_area.addEventListener("keyup", () => {
   }
 });
 
-function gameStart() {
-  randomNumber = Math.floor(Math.random(1) * text_Content.length);
-  typing_view.textContent = text_Content[randomNumber];
-  typing_area.setAttribute("maxlength", typing_view.textContent.length);
-  typing_area.value = "";
-  typing_area.focus();
-  defaultTime();
-}
-
 function gameReStart() {
-  randomNumber = Math.floor(Math.random(1) * text_Content.length);
-  typing_view.textContent = text_Content[randomNumber];
-  typing_area.setAttribute("maxlength", typing_view.textContent.length);
-  typing_area.value = "";
-  plusTime();
+  if (JSON.parse(sessionStorage.getItem("language")) === "english") {
+    enSet();
+    plusTime();
+  } else {
+    koSet();
+    plusTime();
+  }
 }
 
 function gameReset() {
   typing_view.textContent = "";
   typing_area.value = "";
-  scoreEl.textContent = "SCORE";
-  score = 0;
+  scoreEl.textContent = `${score}`;
 }
+
 let interval;
 function startTimer() {
   interval = setInterval(timer, 100);
 }
-let time;
 
+let time;
 function timer() {
   time -= 0.1;
   timeEl.textContent = time.toFixed(1);
@@ -99,6 +158,7 @@ function timer() {
     clearInterval(interval);
     timeEl.textContent = "TIME OUT!";
     btnsEl.classList.remove("ing");
+    headerEl.classList.remove("ing");
     gameReset();
   }
 }
@@ -109,10 +169,10 @@ function plusTime() {
       time += 10;
       break;
     case "NOMAL":
-      time += 5;
+      time += 7;
       break;
     case "HARD":
-      time += 3;
+      time += 5;
       break;
   }
 }
@@ -129,4 +189,25 @@ function defaultTime() {
       time = 12;
       break;
   }
+}
+
+function enSet() {
+  randomNumber = Math.floor(Math.random(1) * en_Content.length);
+  typing_view.textContent = en_Content[randomNumber];
+  typing_area.setAttribute("maxlength", typing_view.textContent.length);
+  typing_area.value = "";
+  typing_area.focus();
+}
+
+function koSet() {
+  randomNumber = Math.floor(Math.random(1) * ko_Content.length);
+  typing_view.textContent = ko_Content[randomNumber];
+  typing_area.setAttribute("maxlength", typing_view.textContent.length);
+  typing_area.value = "";
+  typing_area.focus();
+}
+
+function scoreReset() {
+  scoreEl.textContent = "SCORE";
+  score = 0;
 }
