@@ -57,8 +57,7 @@ typing_area.addEventListener("keyup", () => {
       if (typing_area.value == typing_view.textContent) {
         score += 1;
         scoreEl.textContent = `${score} 점`;
-        plusTime();
-        gameStart();
+        gameReStart();
       }
     }
   }
@@ -71,6 +70,14 @@ function gameStart() {
   typing_area.value = "";
   typing_area.focus();
   defaultTime();
+}
+
+function gameReStart() {
+  randomNumber = Math.floor(Math.random(1) * text_Content.length);
+  typing_view.textContent = text_Content[randomNumber];
+  typing_area.setAttribute("maxlength", typing_view.textContent.length);
+  typing_area.value = "";
+  plusTime();
 }
 
 function gameReset() {
@@ -99,13 +106,13 @@ function timer() {
 function plusTime() {
   switch (levelShow.textContent) {
     case "EASY":
-      time += 13;
-      break;
-    case "NOMAL":
       time += 10;
       break;
+    case "NOMAL":
+      time += 5;
+      break;
     case "HARD":
-      time += 7;
+      time += 3;
       break;
   }
 }
