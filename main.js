@@ -1,10 +1,11 @@
 // 타이핑 영역
-const typing_view = document.querySelector(".typing");
-const typing_area = document.querySelector(".area");
+const typing_view = document.querySelector(".typing-show");
+const typing_area = document.querySelector(".typing-area");
 const timeEl = document.querySelector(".time");
 const scoreEl = document.querySelector(".score");
 const startEl = document.querySelector(".start");
 const btnsEl = document.querySelector(".btns");
+const timeLine = document.querySelector(".line");
 // level 선택
 const levelEl = document.querySelector(".level");
 const levelShow = document.querySelector(".level-show");
@@ -66,8 +67,10 @@ const ko_Content = [
   "한국어는 전 세계에서 12번째로 많이 쓰인다.",
 ];
 // header
+window.onload = enCheck();
+headerEl.addEventListener("click", enCheck);
 
-headerEl.addEventListener("click", () => {
+function enCheck() {
   if (JSON.parse(sessionStorage.getItem("language")) === "english") {
     langEn.classList.add("language");
     LangKo.classList.remove("language");
@@ -75,25 +78,28 @@ headerEl.addEventListener("click", () => {
     LangKo.classList.add("language");
     langEn.classList.remove("language");
   }
+}
+
+levelShow.addEventListener("mouseenter", () => {
+  levelEl.classList.add("spread");
+  choiceEl.forEach((el, index) => {
+    el.style.transitionDelay = (index * 0.3) / choiceEl.length + "s";
+  });
 });
 
-levelEl.addEventListener("click", () => {
-  levelEl.classList.toggle("spread");
-  choiceDelay();
+levelEl.addEventListener("mouseleave", () => {
+  levelEl.classList.remove("spread");
+  choiceEl.forEach((el) => {
+    el.style.transitionDelay = "0s";
+  });
 });
 
 choiceEl.forEach((el) => {
   el.addEventListener("click", () => {
     levelShow.textContent = el.textContent;
+    levelEl.dispatchEvent(new Event("mouseleave"));
   });
 });
-
-function choiceDelay() {
-  choiceEl.forEach((el, index) => {
-    el.style.transitionDelay = (index * 0.15) / choiceEl.length + "s";
-  });
-  choiceEl.reverse();
-}
 
 console.log(choiceEl);
 //main
@@ -115,7 +121,7 @@ function gameStart() {
     scoreReset();
   }
 }
-
+console.log(JSON.parse(sessionStorage.getItem("language")));
 let score = 0;
 typing_area.addEventListener("keyup", () => {
   if (typing_view.textContent.length <= event.target.value.length) {
@@ -147,13 +153,14 @@ function gameReset() {
 
 let interval;
 function startTimer() {
-  interval = setInterval(timer, 100);
+  interval = setInterval(timer, 10);
 }
 
 let time;
 function timer() {
-  time -= 0.1;
+  time -= 0.01;
   timeEl.textContent = time.toFixed(1);
+  timeLine.style.width = 50 * time + "px";
   if (time <= 0) {
     clearInterval(interval);
     timeEl.textContent = "TIME OUT!";
