@@ -1,4 +1,3 @@
-// 타이핑 영역
 const mainEl = document.querySelector("main");
 const typing_view = mainEl.querySelector(".typing-show");
 const typing_area = mainEl.querySelector(".typing-area");
@@ -8,14 +7,14 @@ const scoreEl = mainEl.querySelector(".score");
 const startEl = mainEl.querySelector(".start");
 const resetEl = mainEl.querySelector(".reset");
 const timeLine = mainEl.querySelector(".line");
-// level 선택
+
 const levelEl = document.querySelector(".level");
 const levelShow = document.querySelector(".level-show");
 const choiceEl = [...document.querySelectorAll(".choice")];
-// language 선택
+
 const langEn = document.querySelector(".langen");
 const LangKo = document.querySelector(".langko");
-// header 선택
+
 const headerEl = document.querySelector("header");
 langEn.addEventListener("click", () => {
   sessionStorage.setItem("language", JSON.stringify("english"));
@@ -68,7 +67,7 @@ const ko_Content = [
   "태양 안에는 96만 개의 지구가 들어갈 수 있다.",
   "한국어는 전 세계에서 12번째로 많이 쓰인다.",
 ];
-// header
+
 window.onload = languageCheck();
 window.onload = levelCheck();
 headerEl.addEventListener("click", languageCheck);
@@ -81,7 +80,8 @@ export const setScreenSize = () => {
 setScreenSize();
 
 function levelCheck() {
-  levelShow.textContent = sessionStorage.getItem("level") ? sessionStorage.getItem("level") : sessionStorage.setItem("level", "NOMAL");
+  sessionStorage.getItem("level") ? sessionStorage.getItem("level") : sessionStorage.setItem("level", "NOMAL");
+  levelShow.textContent = sessionStorage.getItem("level");
 }
 
 choiceEl.forEach((el) => {
@@ -116,7 +116,6 @@ levelEl.addEventListener("mouseleave", () => {
   });
 });
 
-//main
 startEl.addEventListener("click", () => {
   gameStart();
   btnsEl.classList.add("ing");
@@ -278,7 +277,7 @@ function defaultTime() {
       break;
   }
 }
-
+let randomNumber;
 function enSet() {
   randomNumber = Math.floor(Math.random(1) * en_Content.length);
   typing_view.textContent = en_Content[randomNumber];
@@ -290,6 +289,7 @@ function enSet() {
 function koSet() {
   randomNumber = Math.floor(Math.random(1) * ko_Content.length);
   typing_view.textContent = ko_Content[randomNumber];
+
   typing_area.setAttribute("maxlength", typing_view.textContent.length);
   typing_area.value = "";
   typing_area.focus();
