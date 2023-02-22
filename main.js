@@ -67,10 +67,25 @@ const ko_Content = [
   "한국어는 전 세계에서 12번째로 많이 쓰인다.",
 ];
 // header
-window.onload = enCheck();
-headerEl.addEventListener("click", enCheck);
+window.onload = languageCheck();
+window.onload = levelCheck();
+headerEl.addEventListener("click", languageCheck);
 
-function enCheck() {
+function levelCheck() {
+  levelShow.textContent = sessionStorage.getItem("level") 
+  ? sessionStorage.getItem("level") 
+  : sessionStorage.setItem("level", "NOMAL");
+}
+
+choiceEl.forEach((el) => {
+  el.addEventListener("click", (event) => {
+    levelShow.textContent = el.textContent;
+    levelEl.dispatchEvent(new Event("mouseleave"));
+    sessionStorage.setItem("level", `${event.target.textContent}`);
+  });
+});
+
+function languageCheck() {
   if (JSON.parse(sessionStorage.getItem("language")) === "english") {
     langEn.classList.add("language");
     LangKo.classList.remove("language");
@@ -94,14 +109,6 @@ levelEl.addEventListener("mouseleave", () => {
   });
 });
 
-choiceEl.forEach((el) => {
-  el.addEventListener("click", () => {
-    levelShow.textContent = el.textContent;
-    levelEl.dispatchEvent(new Event("mouseleave"));
-  });
-});
-
-console.log(choiceEl);
 //main
 startEl.addEventListener("click", () => {
   gameStart();
@@ -121,7 +128,7 @@ function gameStart() {
     scoreReset();
   }
 }
-console.log(JSON.parse(sessionStorage.getItem("language")));
+
 let score = 0;
 typing_area.addEventListener("keyup", () => {
   if (typing_view.textContent.length <= event.target.value.length) {
@@ -180,6 +187,7 @@ function timer() {
     gameReset();
   }
 }
+
 // mobile timeline
 if (matchMedia("(max-width: 650px)").matches) {
   function timer() {

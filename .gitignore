@@ -1,2 +1,6 @@
 package.json
 .vscode
+.parcel-cache
+package-lock.json
+dist
+node_modules

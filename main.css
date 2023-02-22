@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-body {
+.bg-area {
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -11,15 +11,16 @@ body {
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
+  height: 100vh;
 }
 
-@media (max-width: 650px) {
-}
 /* header */
 header {
+  position: relative;
+  top: 30px;
   width: 90%;
   height: 100px;
-  margin: 20px auto 0;
+  margin: 0 auto;
   display: flex;
   align-items: flex-end;
   transition: 0.3s;
@@ -60,10 +61,16 @@ header .level .level-choice .choice {
   transition-delay: 0s;
 }
 
+header .level .level-choice .choice:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  transition: 0s;
+}
+
 header .level.spread .level-choice .choice {
   opacity: 1;
   visibility: visible;
-  transition: 0.3s;
+  transition-property: opacity, visibility;
+  transition-duration: 0.3s;
 }
 
 header .level.spread {
@@ -86,6 +93,9 @@ header .level.spread {
   header > ul > li:hover {
     border: 1px solid rgb(255, 255, 255);
     color: rgb(255, 255, 255);
+  }
+  header .level .level-choice .choice:hover {
+    background-color: rgba(0, 0, 0, 0);
   }
 }
 
