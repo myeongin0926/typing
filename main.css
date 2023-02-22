@@ -11,9 +11,9 @@
   background-attachment: fixed;
   background-size: cover;
   background-repeat: no-repeat;
-  height: 100vh;
+  background-position: center;
+  height: calc(var(--vh, 1vh) * 100);
 }
-
 /* header */
 header {
   position: relative;

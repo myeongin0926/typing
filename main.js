@@ -23,6 +23,20 @@ LangKo.addEventListener("click", () => {
   sessionStorage.removeItem("language");
 });
 
+export const useScreenSize = () => {
+  const setScreenSize = () => {
+    if (typeof window === "undefined") return;
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
+  };
+
+  useEffect(() => {
+    setScreenSize();
+    window.addEventListener("resize", setScreenSize);
+    return () => window.removeEventListener("resize", setScreenSize);
+  }, []);
+};
+
 const en_Content = [
   "Hello World!",
   "Don't dwell on the past",
@@ -117,7 +131,8 @@ startEl.addEventListener("click", () => {
 });
 
 resetEl.addEventListener("click", () => {
-  location.reload();
+  btnsEl.classList.remove("ing");
+  headerEl.classList.remove("ing");
 });
 
 function gameStart() {
