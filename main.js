@@ -1,12 +1,13 @@
 // 타이핑 영역
-const typing_view = document.querySelector(".typing-show");
-const typing_area = document.querySelector(".typing-area");
-const btnsEl = document.querySelector(".btns");
-const timeEl = btnsEl.querySelector(".time");
-const scoreEl = btnsEl.querySelector(".score");
-const startEl = btnsEl.querySelector(".start");
-const resetEl = btnsEl.querySelector(".reset");
-const timeLine = document.querySelector(".line");
+const mainEl = document.querySelector("main");
+const typing_view = mainEl.querySelector(".typing-show");
+const typing_area = mainEl.querySelector(".typing-area");
+const btnsEl = mainEl.querySelector(".btns");
+const timeEl = mainEl.querySelector(".time");
+const scoreEl = mainEl.querySelector(".score");
+const startEl = mainEl.querySelector(".start");
+const resetEl = mainEl.querySelector(".reset");
+const timeLine = mainEl.querySelector(".line");
 // level 선택
 const levelEl = document.querySelector(".level");
 const levelShow = document.querySelector(".level-show");
@@ -22,20 +23,6 @@ langEn.addEventListener("click", () => {
 LangKo.addEventListener("click", () => {
   sessionStorage.removeItem("language");
 });
-
-export const useScreenSize = () => {
-  const setScreenSize = () => {
-    if (typeof window === "undefined") return;
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  };
-
-  useEffect(() => {
-    setScreenSize();
-    window.addEventListener("resize", setScreenSize);
-    return () => window.removeEventListener("resize", setScreenSize);
-  }, []);
-};
 
 const en_Content = [
   "Hello World!",
@@ -86,6 +73,13 @@ window.onload = languageCheck();
 window.onload = levelCheck();
 headerEl.addEventListener("click", languageCheck);
 
+export const setScreenSize = () => {
+  if (typeof window === "undefined") return;
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+};
+setScreenSize();
+
 function levelCheck() {
   levelShow.textContent = sessionStorage.getItem("level") ? sessionStorage.getItem("level") : sessionStorage.setItem("level", "NOMAL");
 }
@@ -128,11 +122,25 @@ startEl.addEventListener("click", () => {
   btnsEl.classList.add("ing");
   headerEl.classList.add("ing");
   startTimer();
+  focusScroll();
 });
+
+function focusScroll() {
+  if (typing_area === document.activeElement) {
+    mainEl.classList.add("focus");
+  } else {
+    mainEl.classList.remove("focus");
+  }
+}
 
 resetEl.addEventListener("click", () => {
   btnsEl.classList.remove("ing");
   headerEl.classList.remove("ing");
+  gameReset();
+  clearInterval(interval);
+  timeEl.textContent = "RESET!";
+  timeLine.style.width = 0;
+  focusScroll();
 });
 
 function gameStart() {
@@ -174,6 +182,8 @@ function gameReset() {
   typing_view.textContent = "";
   typing_area.value = "";
   scoreEl.textContent = `${score}`;
+  typing_area.blur();
+  focusScroll();
 }
 
 let interval;
@@ -182,44 +192,24 @@ function startTimer() {
 }
 
 let time;
-function timer() {
-  time -= 0.01;
-  timeEl.textContent = time.toFixed(1);
-  switch (levelShow.textContent) {
-    case "EASY":
-      timeLine.style.width = (800 / 15) * time + "px";
-      break;
-    case "NOMAL":
-      timeLine.style.width = (800 / 10) * time + "px";
-      10;
-      break;
-    case "HARD":
-      timeLine.style.width = (800 / 7) * time + "px";
-      break;
-  }
-  if (time <= 0) {
-    clearInterval(interval);
-    timeEl.textContent = "TIME OUT!";
-    btnsEl.classList.remove("ing");
-    headerEl.classList.remove("ing");
-    gameReset();
-  }
-}
 
-// mobile timeline
-if (matchMedia("(max-width: 650px)").matches) {
-  function timer() {
+function timer() {
+  focusScroll();
+  if (matchMedia("(max-width: 650px)").matches) {
+    mobileTimer();
+  } else {
     time -= 0.01;
     timeEl.textContent = time.toFixed(1);
     switch (levelShow.textContent) {
       case "EASY":
-        timeLine.style.width = (100 / 15) * time + "%";
+        timeLine.style.width = (800 / 15) * time + "px";
         break;
       case "NOMAL":
-        timeLine.style.width = (100 / 10) * time + "%";
+        timeLine.style.width = (800 / 10) * time + "px";
+        10;
         break;
       case "HARD":
-        timeLine.style.width = (100 / 7) * time + "%";
+        timeLine.style.width = (800 / 7) * time + "px";
         break;
     }
     if (time <= 0) {
@@ -229,6 +219,29 @@ if (matchMedia("(max-width: 650px)").matches) {
       headerEl.classList.remove("ing");
       gameReset();
     }
+  }
+}
+
+function mobileTimer() {
+  time -= 0.01;
+  timeEl.textContent = time.toFixed(1);
+  switch (levelShow.textContent) {
+    case "EASY":
+      timeLine.style.width = (100 / 15) * time + "%";
+      break;
+    case "NOMAL":
+      timeLine.style.width = (100 / 10) * time + "%";
+      break;
+    case "HARD":
+      timeLine.style.width = (100 / 7) * time + "%";
+      break;
+  }
+  if (time <= 0) {
+    clearInterval(interval);
+    timeEl.textContent = "TIME OUT!";
+    btnsEl.classList.remove("ing");
+    headerEl.classList.remove("ing");
+    gameReset();
   }
 }
 
