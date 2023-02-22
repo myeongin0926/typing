@@ -100,7 +100,6 @@ header .level.spread {
 }
 
 /* main */
-
 main {
   position: relative;
   margin: 0 auto;
@@ -153,11 +152,9 @@ main .btns {
   gap: 25px;
   justify-content: center;
   margin: -150px auto;
+  perspective: 600px;
 }
-
-main .score,
-main .time,
-main .start {
+main .btns div {
   width: 150px;
   height: 40px;
   display: flex;
@@ -171,23 +168,29 @@ main .start {
   border-radius: 20px;
   transition: 0.3s;
 }
+main .btns div.reset {
+  position: absolute;
 
+  backface-visibility: hidden;
+  transform: rotateY(180deg);
+}
+
+main .btns div.reset:hover,
 main .btns .start:hover {
   background-color: rgb(0, 0, 0, 0.5);
   color: white;
   border: 3px solid white;
   cursor: pointer;
 }
-main .btns.ing .score {
-  transform: translate(-70px, 0);
-}
-main .btns.ing .time {
-  transform: translate(70px, 0);
-}
 main .btns.ing .start {
-  opacity: 0;
-  visibility: hidden;
+  backface-visibility: hidden;
+  transform: rotateY(-180deg);
 }
+
+main .btns.ing div.reset {
+  transform: rotateY(0deg);
+}
+
 @media (max-width: 650px) {
   main .typing-show-area {
     width: 70%;
@@ -217,20 +220,13 @@ main .btns.ing .start {
     height: 100px;
     align-items: center;
   }
-  main .score,
-  main .time,
-  main .start {
+  main .btns div {
     width: 25%;
     height: 30px;
     font-size: 10px;
   }
+
   main .btns .start:hover {
     background-color: rgb(0, 0, 0, 0.1);
-  }
-  main .btns.ing .score {
-    transform: translate(-40px, 0);
-  }
-  main .btns.ing .time {
-    transform: translate(40px, 0);
   }
 }

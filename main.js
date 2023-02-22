@@ -1,10 +1,11 @@
 // 타이핑 영역
 const typing_view = document.querySelector(".typing-show");
 const typing_area = document.querySelector(".typing-area");
-const timeEl = document.querySelector(".time");
-const scoreEl = document.querySelector(".score");
-const startEl = document.querySelector(".start");
 const btnsEl = document.querySelector(".btns");
+const timeEl = btnsEl.querySelector(".time");
+const scoreEl = btnsEl.querySelector(".score");
+const startEl = btnsEl.querySelector(".start");
+const resetEl = btnsEl.querySelector(".reset");
 const timeLine = document.querySelector(".line");
 // level 선택
 const levelEl = document.querySelector(".level");
@@ -72,9 +73,7 @@ window.onload = levelCheck();
 headerEl.addEventListener("click", languageCheck);
 
 function levelCheck() {
-  levelShow.textContent = sessionStorage.getItem("level") 
-  ? sessionStorage.getItem("level") 
-  : sessionStorage.setItem("level", "NOMAL");
+  levelShow.textContent = sessionStorage.getItem("level") ? sessionStorage.getItem("level") : sessionStorage.setItem("level", "NOMAL");
 }
 
 choiceEl.forEach((el) => {
@@ -115,6 +114,10 @@ startEl.addEventListener("click", () => {
   btnsEl.classList.add("ing");
   headerEl.classList.add("ing");
   startTimer();
+});
+
+resetEl.addEventListener("click", () => {
+  location.reload();
 });
 
 function gameStart() {
