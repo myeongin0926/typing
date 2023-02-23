@@ -11,45 +11,54 @@
 
     <!-- main.css 연결 -->
     <link rel="stylesheet" href="./main.css" />
+    <!-- imagesleaded 연결 -->
+    <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
     <!-- main.js 연결 -->
     <script type="module" defer src="./main.js"></script>
     <title>타자연습</title>
   </head>
   <body>
-    <div class="bg-area">
-      <header>
-        <ul>
-          <li class="langen">ENGLISH</li>
-          <li class="level">
-            <div class="level-show">NOMAL</div>
+    <div class="loading-area loading">
+      <div class="loading-modal">
+        <img src="./loading-gif.gif" alt="loading" />
+        <h1>L o a d i n g</h1>
+      </div>
 
-            <ul class="level-choice">
-              <li class="choice">EASY</li>
-              <li class="choice">NOMAL</li>
-              <li class="choice">HARD</li>
-            </ul>
-          </li>
-          <li class="langko">KOREAN</li>
-        </ul>
-      </header>
+      <div class="bg-area">
+        <header>
+          <ul>
+            <li class="langen">ENGLISH</li>
+            <li class="level">
+              <div class="level-show">NOMAL</div>
 
-      <!-- main -->
-      <main>
-        <div class="typing-show-area">
-          <div class="typing-show"></div>
-          <div class="line"></div>
-        </div>
-        <input class="typing-area" type="text" />
+              <ul class="level-choice">
+                <li class="choice">EASY</li>
+                <li class="choice">NOMAL</li>
+                <li class="choice">HARD</li>
+              </ul>
+            </li>
+            <li class="langko">KOREAN</li>
+          </ul>
+        </header>
 
-        <div class="btns">
-          <div class="time">TIME</div>
+        <!-- main -->
+        <main>
+          <div class="typing-show-area">
+            <div class="typing-show"></div>
+            <div class="line"></div>
+          </div>
+          <input class="typing-area" type="text" placeholder="Enter를 눌러 시작" />
 
-          <div class="start">START</div>
-          <div class="material-symbols-outlined reset">restart_alt</div>
+          <div class="btns">
+            <div class="time">TIME</div>
 
-          <div class="score">SCORE</div>
-        </div>
-      </main>
+            <div class="start">START</div>
+            <div class="material-symbols-outlined reset">restart_alt</div>
+
+            <div class="score">SCORE</div>
+          </div>
+        </main>
+      </div>
     </div>
   </body>
 </html>

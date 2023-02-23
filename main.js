@@ -1,3 +1,5 @@
+const loadEl = document.querySelector(".loading-area");
+const bgEl = document.querySelector(".bg-area");
 const mainEl = document.querySelector("main");
 const typing_view = mainEl.querySelector(".typing-show");
 const typing_area = mainEl.querySelector(".typing-area");
@@ -42,6 +44,21 @@ const en_Content = [
   "Life is unfair, get used to it",
   "Time waits for no one",
   "Don't waste your youth",
+  "Age is no guarantee of maturity",
+  "Youth isn't always all it's touted to be",
+  "This too shall pass",
+  "The die is cast",
+  "Despite the forecast, live like it's spring",
+  "Turn your wounds into wisdom",
+  "All we have is now",
+  "A day without laughter is a day wasted",
+  "Rome is not built in a day",
+  "It ain't over till it's over",
+  "No sweat, no sweet",
+  "Let bygones be bygones",
+  "Life is venture or nothing",
+  "Pain past is pleasure",
+  "Step by step goes a long way",
 ];
 const ko_Content = [
   "숭례문은 국보 1호 문화재이다.",
@@ -51,7 +68,6 @@ const ko_Content = [
   "돼지는 하늘을 볼 수 없다.",
   "달걀을 서로 부딪치면 하나만 깨진다.",
   "땅콩은 견과류가 아니다.",
-  "의사, 변호사, 검사의 '사'자는 다 다르다.",
   "쥐는 치즈를 선호하지 않는다.",
   "지구에서 가장 큰 사막은 남극이다.",
   "꿀벌은 에베레스트보다 높게 날 수 있다.",
@@ -63,14 +79,37 @@ const ko_Content = [
   "피는 물보다 진하다.",
   "한국은 세계에서 가장 많은 섬을 가지고 있다.",
   "세 가지의 색을 가진 고양이는 거의 암컷이다.",
-  "러시아는 고드름으로 인해 매년 100명 이상이 사망한다.",
-  "태양 안에는 96만 개의 지구가 들어갈 수 있다.",
   "한국어는 전 세계에서 12번째로 많이 쓰인다.",
+  "피라미드가 제일 많은 나라는 이집트가 아니다.",
+  "남극, 북극에선 감기에 걸리지 않는다.",
+  "뜨거운 물이 차가운 물보다 더 빨리 언다.",
+  "벼룩은 자기 몸길이의 350배 길이를 점프한다.",
+  "나비는 발로 맛을 본다.",
+  "인간 신체의 가장 힘이 센 근육은 혀이다.",
+  "타조는 눈이 뇌보다 크다.",
+  "오렌지는 원래 녹색이다.",
+  "브로콜리는 인공식품이다.",
+  "천연 바나나에는 씨앗이 있다.",
+  "개미는 절대 추락사하지 않는다.",
+  "꿀벌은 사람의 얼굴을 인식한다.",
+  "소리는 공기보다 물속에서 4배 빠르다.",
+  "스페인 국가에는 가사가 없다.",
+  "눈물은 색깔 빼고는 혈액과 성분이 동일하다.",
+  "오목을 한 판 할 때마다 뇌세포 200개가 죽는다.",
+  "낙타는 혹이 있지만 척추는 곧바르다.",
+  "고양이는 성경에 유일하게 기록되지 않는 가축이다.",
+  "트럼프 속의 킹, 퀸은 실존 인물이다.",
+  "우리가 꾸는 꿈은 잠에서 깨기 30초 전에 꾼다.",
+  "인류는 침팬지보다 늦게 우주에 갔다.",
 ];
 
 window.onload = languageCheck();
 window.onload = levelCheck();
 headerEl.addEventListener("click", languageCheck);
+
+imagesLoaded(bgEl, { background: true }, function () {
+  loadEl.classList.remove("loading");
+});
 
 export const setScreenSize = () => {
   if (typeof window === "undefined") return;
@@ -116,6 +155,22 @@ levelEl.addEventListener("mouseleave", () => {
   });
 });
 
+document.body.addEventListener("keyup", (event) => {
+  if (!btnsEl.classList.contains("ing")) {
+    if (event.key == "Enter") startEl.dispatchEvent(new Event("click"));
+  } else {
+    if (event.key == "Escape") resetEl.dispatchEvent(new Event("click"));
+  }
+});
+
+document.body.addEventListener("keyup", (event) => {
+  if (!btnsEl.classList.contains("ing")) {
+    if (event.key == "Enter") startEl.dispatchEvent(new Event("click"));
+  } else {
+    if (event.key == "Escape") resetEl.dispatchEvent(new Event("click"));
+  }
+});
+
 startEl.addEventListener("click", () => {
   gameStart();
   btnsEl.classList.add("ing");
@@ -147,10 +202,20 @@ function gameStart() {
     enSet();
     defaultTime();
     scoreReset();
+    if (matchMedia("(min-width: 650px)").matches) {
+      typing_area.setAttribute("placeholder", "Esc를 눌러 리셋");
+    } else {
+      typing_area.setAttribute("placeholder", "");
+    }
   } else {
     koSet();
     defaultTime();
     scoreReset();
+    if (matchMedia("(min-width: 650px)").matches) {
+      typing_area.setAttribute("placeholder", "Esc를 눌러 리셋");
+    } else {
+      typing_area.setAttribute("placeholder", "");
+    }
   }
 }
 
@@ -183,6 +248,7 @@ function gameReset() {
   scoreEl.textContent = `${score}`;
   typing_area.blur();
   focusScroll();
+  typing_area.setAttribute("placeholder", "Enter를 눌러 시작");
 }
 
 let interval;
