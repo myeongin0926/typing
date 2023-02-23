@@ -258,7 +258,7 @@ function plusTime() {
     case "HARD":
       time += 4;
       if (time > 7) {
-        time = 10;
+        time = 7;
       }
       break;
   }
@@ -277,19 +277,60 @@ function defaultTime() {
       break;
   }
 }
-let randomNumber;
-function enSet() {
-  randomNumber = Math.floor(Math.random(1) * en_Content.length);
-  typing_view.textContent = en_Content[randomNumber];
+
+typing_area.addEventListener("input", initTyping);
+
+function initTyping() {
+  const checkIndex = [typing_area.value.length - 1];
+  const showWord = typing_view.querySelectorAll("span");
+  showWord.forEach((el, index) => {
+    el.classList.remove("active");
+    showWord[checkIndex]?.classList.add("active");
+    if (matchMedia("(max-width: 650px)").matches) {
+      if (el.innerText == typing_area.value[index]) {
+        el.style.color = "rgb(172, 172, 172)";
+        el.style.backgroundColor = "transparent";
+      } else if (typing_area.value[index] == undefined) {
+        el.style.color = "white";
+        el.style.backgroundColor = "transparent";
+      } else {
+        el.style.color = "red";
+      }
+    } else {
+      if (el.innerText == typing_area.value[index]) {
+        el.style.color = "white";
+        el.style.backgroundColor = "transparent";
+      } else if (typing_area.value[index] == undefined) {
+        el.style.color = "black";
+        el.style.backgroundColor = "transparent";
+      } else {
+        el.style.color = "red";
+      }
+    }
+  });
+}
+
+function koSet() {
+  typing_view.innerHTML = "";
+  let randomNumber = Math.floor(Math.random(1) * ko_Content.length);
+
+  ko_Content[randomNumber].split("").forEach((span) => {
+    let spanTag = `<span>${span}</span>`;
+    typing_view.innerHTML += spanTag;
+  });
   typing_area.setAttribute("maxlength", typing_view.textContent.length);
   typing_area.value = "";
   typing_area.focus();
 }
 
-function koSet() {
-  randomNumber = Math.floor(Math.random(1) * ko_Content.length);
-  typing_view.textContent = ko_Content[randomNumber];
+function enSet() {
+  typing_view.innerHTML = "";
+  let randomNumber = Math.floor(Math.random(1) * en_Content.length);
 
+  en_Content[randomNumber].split("").forEach((span) => {
+    let spanTag = `<span>${span}</span>`;
+    typing_view.innerHTML += spanTag;
+  });
   typing_area.setAttribute("maxlength", typing_view.textContent.length);
   typing_area.value = "";
   typing_area.focus();
